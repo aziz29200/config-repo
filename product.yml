@@ -1,0 +1,38 @@
+server.port: 7001
+
+
+Spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: product-db
+  kafka:
+    bootstrap-servers: http://127.0.0.1:9092
+    consumer:
+      group-id: product_group
+      key-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+      value-deserializer: "org.springframework.kafka.support.serializer.JsonDeserializer"
+      auto-offset-reset: earliest
+      properties:
+        spring:
+          json:
+            value:
+              default:
+                type: 'com.eshop.product.model.ProductEvent'
+logging:
+  level:
+    root: INFO
+    com.eshop: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+
+
+---
+spring.config.activate.on-profile: docker
+
+server.port: 8080
+
+spring:
+  data.mongodb.host: mongodb
+  kafka:
+    bootstrap-servers: http://kafka:29092

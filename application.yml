@@ -1,0 +1,38 @@
+app:
+  eureka-server: localhost
+  eureka-username: user
+  eureka-password: pwd
+  auth-server: localhost
+  config-server: localhost
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: "http://${app.eureka-username}:${app.eureka-password}@${app.eureka-server}:8761/eureka/"
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
+
+
+
+---
+spring:
+  config.activate.on-profile: docker
+app:
+  eureka-server: eureka-registration
+  eureka-username: user
+  eureka-password: pwd
+  auth-server: auth-server
+  config-server: config-server
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: "http://${app.eureka-username}:${app.eureka-password}@${app.eureka-server}:8761/eureka/"
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
